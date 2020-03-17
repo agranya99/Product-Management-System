@@ -1,0 +1,918 @@
+openapi: 3.0.0
+# Added by API Auto Mocking Plugin
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/agranya99/Product-Management-System/1.0.0
+  - description: Localhost
+    url: http://localhost:3000/
+info:
+  version: "1.0.0"
+  title: Product Management System
+  description: REST API for Product Management System.
+  contact:
+    email: agranyasingh5@gmail.com
+  license:
+    name: MIT License
+    url: 'https://opensource.org/licenses/MIT'
+
+# OAuth 2.0 Client Credentials Flow
+# Applying security globally
+security:
+  - pms_auth:
+      - read
+      - write
+
+# tags
+#   - products
+#   - categories
+#   - utilities
+#   - providers
+#   - misc
+
+# paths
+#   - /products
+#       /products/...
+#   - /categories
+#       /categories/...
+#   - /providers
+#       /providers/...
+#   - /
+#   - /*
+
+# components
+#   - schemas
+#       reusable schemas (Product, Category, Provider...)
+#   - parameters
+#       reusable query parameters (Limit, Offset, Name...)
+#   - requestBodies
+#       reusable request bodies (ProductReq, CategoryReq...)
+#   - responses
+#       reusable responses (NotFound, InvalidRequest...)
+#   - securitySchemes
+#       pms_auth  (OAuth2.0)
+
+
+tags:
+  - name: products
+    description: Fetch, Add, Modify and Remove Products
+  - name: categories
+    description: Fetch, Add, Modify and Remove Categories
+  - name: utilities
+    description: Utility functions related to Products and Categories
+  - name: providers
+    description: Fetch, Add, Modify and Remove Partner Businesses (Providers)
+  - name: misc
+    description: Miscellaneous
+
+paths:
+  /:
+    get:
+      tags:
+      - misc
+      summary: Fetch list of all valid endpoints
+      description: Use this to fetch a list of all valid API endpoints
+      operationId: GetEndPointList
+      responses:
+        200:
+          description: List of all endpoints
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  listOfEndpoints:
+                    type: array
+                    items:
+                      type: string
+
+  /products:
+    get:
+      tags:
+        - products
+      summary: Fetch a list of Products via Query Parameters
+      description: Fetch a list of all Products in the database or use Query Parameters to filter
+      operationId: GetProducts
+      parameters:
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/OffsetParam'
+        - $ref: '#/components/parameters/NameParam'
+        - in: query
+          name: attributes
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+          style: deepObject
+          explode: false
+        - in: query
+          name: price
+          schema:
+            type: number
+        - in: query
+          name: qTags
+          schema:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+          style: form
+          explode: false
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum:
+              - available
+              - pipeline
+      responses:
+        200:
+          description: Returns a list of JSON objects with details of all products (stock etc)
+          content:
+            application/json:
+              schema:
+                type: array
+                description: Array of Product objects
+                items:
+                  $ref: '#/components/schemas/Product'
+        400:
+          $ref: '#/components/responses/InvalidRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+
+    post:
+      tags:
+      - products
+      summary: Add a new product
+      description: Request Body must contain unique product sku and details
+      operationId: CreateProduct
+      requestBody:
+        $ref: '#/components/requestBodies/ProductReqBody'
+      responses:
+        200:
+          description: Product was added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OKMessage'
+        400:
+          $ref: '#/components/responses/InvalidRequest'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+
+    put:
+      tags:
+      - products
+      summary: Update an existing product
+      description: Request Body must contain  product sku and details
+      operationId: UpdateProduct
+      requestBody:
+        $ref: '#/components/requestBodies/ProductReqBody'
+      responses:
+        200:
+          description: Product was updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrMessage'
+        400:
+          $ref: '#/components/responses/InvalidRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+
+  /products/{sku}:
+    get:
+      tags:
+      - products
+      summary: Get the details of a product
+      description: Fetch all the details of a product
+      operationId: GetProduct
+      parameters:
+      - $ref: '#/components/parameters/SKUParam'
+      responses:
+        200:
+          description: Returns a JSON object with details of a product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        400:
+          $ref: '#/components/responses/InvalidRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+
+    post:
+      tags:
+      - products
+      summary: Add a new product via a form
+      description: Add a new product to the database via a form
+      operationId: CreateProductForm
+      parameters:
+      - $ref: '#/components/parameters/SKUParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required: [name, categoryID, price, status]
+              properties:
+                name:
+                  type: string
+                  example: Azrael's Sword
+                categoryID:
+                  type: integer
+                  example: 2
+                qTags:
+                  type: array
+                  items:
+                    type: string
+                attributes:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  example:
+                    color: white
+                    size: 12
+                price:
+                  minimum: 1
+                  type: number
+                  example: 5200.0
+                imageURLs:
+                  type: array
+                  items:
+                    type: string
+                providerID:
+                  type: integer
+                  example: 2
+                launchDate:
+                  type: string
+                  format: date
+                  example: '2020-03-14'
+                stock:
+                  minimum: 0
+                  type: integer
+                  example: 200
+                status:
+                  type: string
+                  example: available
+                  enum:
+                  - available
+                  - pipeline
+        required: true
+      responses:
+        200:
+          description: Product was added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrMessage'
+        400:
+          $ref: '#/components/responses/InvalidRequest'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+
+    delete:
+      tags:
+      - products
+      summary: Delete an existing product
+      description: Delete an existing product
+      operationId: DeleteProduct
+      parameters:
+      - $ref: '#/components/parameters/SKUParam'
+      responses:
+        200:
+          description: Successfully deleted the product and all of its children
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrMessage'
+        404:
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+
+
+  /categories:
+    get:
+      tags:
+      - categories
+      summary: Fetch List of Category objects using query parameters
+      description: Fetch a list of all Categories in the database or use Query Parameters to filter
+      operationId: GetCategories
+      parameters:
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/OffsetParam'
+        - $ref: '#/components/parameters/NameParam'
+        - in: query
+          name: parentCategoryID
+          description: Filter by Parent Category ID
+          schema:
+            type: integer
+
+      responses:
+        200:
+          description: Returns a list of JSON object with details of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                description: Array of Category objects
+                items:
+                  $ref: '#/components/schemas/Category'
+        400:
+          $ref: '#/components/responses/InvalidRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+
+    put:
+      tags:
+      - categories
+      summary: Update an existing category
+      description: Request body must contain the category ID and the details to be updated. To remove parent from a category, set parentCategoryID to -1
+      operationId: UpdateCategory
+      requestBody:
+        $ref: '#/components/requestBodies/CategoryReqBody'
+      responses:
+        200:
+          description: Category was updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrMessage'
+        400:
+          $ref: '#/components/responses/InvalidRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+
+    post:
+      tags:
+      - categories
+      summary: Add a new category
+      description: Request Body must contain unique categoryID and details
+      operationId: CreateCategory
+      requestBody:
+        $ref: '#/components/requestBodies/CategoryReqBody'
+      responses:
+        200:
+          description: Category was added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrMessage'
+        400:
+          $ref: '#/components/responses/InvalidRequest'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+
+  /categories/{categoryID}:
+    get:
+      tags:
+      - categories
+      summary: Get the details of a category
+      description: Fetch all the details of a category
+      operationId: GetCategory
+      parameters:
+      - $ref: '#/components/parameters/CategoryIDParam'
+      responses:
+        200:
+          description: Returns a JSON object with details of a category
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        400:
+          $ref: '#/components/responses/InvalidRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+
+    post:
+      tags:
+      - categories
+      summary: Add a new category via a form
+      description: Add a new category to the database via a form
+      operationId: CreateCategoryForm
+      parameters:
+      - $ref: '#/components/parameters/CategoryIDParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required: [name]
+              properties:
+                name:
+                  type: string
+                  description: Name of the Category
+                parentCategoryID:
+                  type: integer
+                  description: Category ID of its parent category. Leave blank for no parent
+                  format: int32
+        required: true
+      responses:
+        200:
+          description: Category was added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrMessage'
+        400:
+          $ref: '#/components/responses/InvalidRequest'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+
+    delete:
+      tags:
+      - categories
+      summary: Delete an existing category and all its subcategories
+      description: Remove a category, all subcategories of the category and the products
+        associated to them
+      operationId: DeleteCategory
+      parameters:
+      - $ref: '#/components/parameters/CategoryIDParam'
+      responses:
+        200:
+          description: Successfully deleted the category and all of its children
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrMessage'
+        404:
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+
+  /categories/{categoryID}/subCategories:
+    get:
+      tags:
+      - utilities
+      summary: Get sub categories of a category
+      description: Get a list of all first level sub-categories of a given category
+      operationId: GetSubCategories
+      parameters:
+      - $ref: '#/components/parameters/CategoryIDParam'
+      responses:
+        200:
+          description: Returns a list of all subcategories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subCategories:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Category'
+        400:
+          $ref: '#/components/responses/InvalidRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+
+  /categories/{categoryID}/products:
+    get:
+      tags:
+      - utilities
+      summary: Get all products in a category
+      description: Get a list of all products from a category
+      operationId: GetProductsInCategory
+      parameters:
+      - $ref: '#/components/parameters/CategoryIDParam'
+      responses:
+        200:
+          description: Returns a list of all products in the category
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+        400:
+          $ref: '#/components/responses/InvalidRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+
+  /products/{sku}/similar:
+    get:
+      tags:
+      - utilities
+      summary: Get similar products (Based on Query Tags)
+      description: Get a list of all products similar to this product based on query tags
+      operationId: GetSimilarProducts
+      parameters:
+        - $ref: '#/components/parameters/SKUParam'
+      responses:
+        200:
+          description: Returns a list of all similar products
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+        400:
+          $ref: '#/components/responses/InvalidRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+
+  /providers:
+    get:
+      tags:
+      - providers
+      summary: Fetch a list of Providers (Partner Businesses) via Query Parameters
+      description: Fetch a list of all Providers in the database or use Query Parameters to filter
+      operationId: GetProviders
+      parameters:
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/OffsetParam'
+        - $ref: '#/components/parameters/NameParam'
+      responses:
+        200:
+          description: Returns a JSON object with details of Provider
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+        400:
+          $ref: '#/components/responses/InvalidRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+    put:
+      tags:
+      - providers
+      summary: Update an existing Provider (Partner Business)
+      description: Request body must contain the provider ID and details to be updated
+      operationId: UpdateProvider
+      requestBody:
+        $ref: '#/components/requestBodies/ProviderReqBody'
+      responses:
+        200:
+          description: Provider was updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrMessage'
+        400:
+          $ref: '#/components/responses/InvalidRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+
+    post:
+      tags:
+      - providers
+      summary: Add a new Provider
+      description: Add a new Provider (Partner Business) to database
+      operationId: CreateProvider
+      requestBody:
+        $ref: '#/components/requestBodies/ProviderReqBody'
+      responses:
+        200:
+          description: Provider was added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrMessage'
+        400:
+          $ref: '#/components/responses/InvalidRequest'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+
+  /providers/{providerID}:
+    get:
+      tags:
+      - providers
+      summary: Get the details of a Provider (Partner Business)
+      description: Fetch all the details of a Provider
+      operationId: GetProvider
+      parameters:
+        - $ref: '#/components/parameters/ProviderIDParam'
+      responses:
+        200:
+          description: Returns a JSON object with details of Provider
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+        400:
+          $ref: '#/components/responses/InvalidRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+
+    delete:
+      tags:
+      - providers
+      summary: Delete an existing Provider
+      description: Delete an existing Provider (Partner Business) from database
+      operationId: DeleteProvider
+      parameters:
+        - $ref: '#/components/parameters/ProviderIDParam'
+      responses:
+        200:
+          description: Successfully deleted the Provider
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrMessage'
+        404:
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+
+  /*:
+    get:
+      tags:
+      - misc
+      summary: Any invalid URL
+      description: Any URL which doesn't match the above paths will be handled by
+        this
+      operationId: GetInvalidURL
+      responses:
+        404:
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      tags:
+      - misc
+      summary: Any invalid URL
+      description: Any URL which doesn't match the above paths will be handled by
+        this
+      operationId: PutInvalidURL
+      responses:
+        404:
+          $ref: '#/components/responses/NotFound'
+
+    post:
+      tags:
+      - misc
+      summary: Any invalid URL
+      description: Any URL which doesn't match the above paths will be handled by
+        this
+      operationId: PostInvalidURL
+      responses:
+        404:
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags:
+      - misc
+      summary: Any invalid URL
+      description: Any URL which doesn't match the above paths will be handled by
+        this
+      operationId: DeleteInvalidURL
+      responses:
+        404:
+          $ref: '#/components/responses/NotFound'
+
+components:
+  schemas:
+    Product:
+      type: object
+      required: [sku, name, categoryID, price]
+      properties:
+        sku:
+          type: string
+          minLength: 8
+          maxLength: 8
+          description: Unique Identifier for the Product
+          example: 15dc24h2
+        name:
+          type: string
+          maxLength: 50
+          description: Name of the Product
+          example: Azrael's Sword
+        categoryID:
+          type: integer
+          minimum: 0
+          description: ID of the category product belongs to
+          example: 2
+        qTags:
+          type: array
+          description: An array of query tags to facilitate searching
+          items:
+            type: string
+            example: "cosplay"
+        attributes:
+          type: object
+          description: Attributes for a product e.g. color, size
+          additionalProperties:
+            type: string
+          example:
+            color: white
+            size: 12
+        price:
+          type: number
+          minimum: 0
+          description: Selling price of the item
+          example: 5200.0
+        imageURLs:
+          type: array
+          description: An array of URLs where the images of the product are hosted
+          items:
+            type: string
+            example: "D:\\images\\sword1.png"
+        providerID:
+          type: integer
+          description: Unique Identifier for third party Provider (if any)
+          # Default=0: Product by the company itself - no third party
+          default: 0
+          example: 3
+        launchDate:
+          type: string
+          format: date
+          example: 2020-03-14
+        stock:
+          minimum: 0
+          type: integer
+          description: Number of items available in stock
+          default: 0
+          example: 200
+        status:
+          type: string
+          description: Current status of the product (available or in development pipeline)
+          default: available
+          example: available
+          enum:
+          - available
+          - pipeline
+    Category:
+      type: object
+      required: [categoryID, name]
+      properties:
+        categoryID:
+          type: integer
+          description: Unique Identifier for the Category
+          example: 1
+        name:
+          type: string
+          description: Name of the Category
+          example: Writing Tools
+        parentCategoryID:
+          type: integer
+          description: Category ID of its parent category. Blank for no parent
+    # In case of 3rd party provider
+    Provider:
+      type: object
+      required: [providerID, name]
+      properties:
+        providerID:
+          type: integer
+          description: Unique Identifier for Provider
+          example: 3
+        name:
+          type: string
+          description: Name of the provider
+          example: Angel Inc.
+        website:
+          type: string
+          format: uri
+          description: Website of Provider
+          example: www.angel.com/product
+        email:
+          type: string
+          format: email
+          description: Contact e-mail of Provider
+          example: support@angel.com
+    ErrMessage:
+      type: object
+      properties:
+        status:
+          type: string
+          example: Error type
+        message:
+          type: string
+          example: Error detailed description
+    OKMessage:
+      type: object
+      properties:
+        id:
+          type: string
+          example: object ID
+        message:
+          type: string
+          example: C/U/D Operation successful
+
+  # reusable parameters
+  parameters:
+    LimitParam:
+      in: query
+      name: limit
+      schema:
+        type: integer
+      description: The numbers of items to return
+    OffsetParam:
+      in: query
+      name: offset
+      schema:
+        type: integer
+      description: The number of items to skip before starting to collect the result set
+    NameParam:
+      in: query
+      name: name
+      description: Filter by name attribute of object
+      schema:
+        type: string
+    SKUParam:
+      name: sku
+      in: path
+      description: sku of the product on which operation needs to be performed
+      required: true
+      schema:
+        type: string
+    CategoryIDParam:
+      name: categoryID
+      in: path
+      description: Unique ID of the category on which operation needs to be performed
+      required: true
+      schema:
+        type: integer
+    ProviderIDParam:
+      name: providerID
+      in: path
+      description: Unique ID of the provider on which operation needs to be performed
+      required: true
+      schema:
+        type: string
+  requestBodies:
+    ProductReqBody:
+      description: Details of the product
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Product'
+      required: true
+    CategoryReqBody:
+      description: Details of the category
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Category'
+      required: true
+    ProviderReqBody:
+      description: Details of the provider
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Provider'
+      required: true
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          # error description with specific info
+          schema:
+            $ref: '#/components/schemas/ErrMessage'
+    InvalidRequest:
+      description: Invalid request
+      content:
+        application/json:
+          # error description with specific info
+          schema:
+            $ref: '#/components/schemas/ErrMessage'
+    ServerError:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Unexpected server error
+
+  # OAuth 2.0 Client Credentials Flow
+  securitySchemes:
+    pms_auth:
+      type: oauth2
+      flows:
+        clientCredentials:
+          # okta Authorization URL
+          tokenUrl: 'https://dev-941571.okta.com/oauth2/aus3xx16wH3NoyUFK4x6/v1/token'
+          scopes:
+            write: allows modifying resources
+            read: allows reading resources
