@@ -21,7 +21,33 @@ const createProductSchema = {
     })
 }
 
+const getProductSchema = {
+    params: joi.object({
+        'sku': joi.string().length(8)
+    })
+}
 
+const updateProductSchema = {
+    params: joi.object({
+        'sku': joi.string().length(8)
+    }),
+    body: joi.object({
+        'name': joi.string(),
+        'categoryID': joi.number().integer().min(0),
+        'qTags': joi.array().items(joi.string()),
+        'attributes': joi.object().pattern(/^/, joi.array().items(joi.string())),
+        'price': joi.number().min(0),
+        'imageURLs': joi.array().items(joi.string()),
+        'providerID': joi.number().integer().min(0),
+        'launchDate': joi.date(),
+        'stock': joi.number().integer(),
+        'status': joi.string().valid(['available', 'pipeline'])
+    })
+}
+
+router.get('/', productController.getProducts);
 router.post('/', (req, res, next) => joiValidator(createProductSchema, req, res, next), productController.createProduct);
-//router.use('/', (req, res, next) => joiValidator(createProductSchema, req, res, next));
+router.get('/:sku', (req, res, next) => joiValidator(getProductSchema, req, res, next), productController.getProduct);
+router.put('/:sku', (req, res, next) => joiValidator(updateProductSchema, req, res, next), productController.updateProduct);
+router.delete('/:sku', (req, res, next) => joiValidator(getProductSchema, req, res, next), productController.deleteProduct);
 module.exports = router;
