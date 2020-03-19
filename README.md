@@ -1,5 +1,7 @@
 # Product Management System
 
+A scalable REST API developed in Node.Js to facilitate CRUD and utility operations on products, categories, providers (Business Partners). Authorization is performed via OAuth 2.0 (Client Credentials Flow) and Validation is performed using Hapi/JOI. The API uses MongoDB as back-end database with Mongoose framework for data modelling, querying and validation. OpenAPI 3.0 Specification is written for the API. <https://app.swaggerhub.com/apis/agranya99/Product-Management-System/1.0.0>
+
 ## Softwares and Frameworks
 - OpenAPI 3.0 Specification
 - express.js
@@ -9,6 +11,13 @@
 - MongoDB Atlas
 
 ## Features
+
+### OpenAPI 3.0 Specification
+Detailed API Description - available endpoints and possible operations on the endpoints with request and response details.
+
+The specification is built using re-usable `schemas`, `parameters`, `requestBodies` and `responses` and includes `securitySchemes` for OAuth2.0.
+
+Checkout <https://app.swaggerhub.com/apis/agranya99/Product-Management-System/1.0.0> or openapi-spec.yaml
 
 ### Authorization 
 **OAuth 2.0 Client Credentials Grant** is implemented using Okta Authorization server. It helps with granting limited access without user credentials, set rate limits, etc.
