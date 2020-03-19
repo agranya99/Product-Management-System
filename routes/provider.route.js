@@ -7,10 +7,10 @@ const router = express.Router();
 
 const filterProvidersSchema = {
     query: joi.object({
-        'limit': joi.number().min(1),
-        'offset': joi.number().min(0),
-        'name': joi.string(),
-        'email': joi.string().email()
+        'limit': joi.number().min(1),   //?limit=10
+        'offset': joi.number().min(0),  //?offset=1
+        'name': joi.string(),   //?name=Razer
+        'email': joi.string().email()  
     })
 }
 

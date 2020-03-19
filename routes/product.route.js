@@ -7,13 +7,13 @@ const router = express.Router();
 
 const filterProductsSchema = {
     query: joi.object({
-        'limit': joi.number().min(1),
-        'offset': joi.number().min(0),
-        'name': joi.string(),
-        //'qTags': joi.string(),  // ?qTags=furniture,table
-        'attributes': joi.object().pattern(/^/, joi.string()),
-        'provider': joi.string(),
-        'status': joi.string().valid(['available', 'pipeline'])
+        'limit': joi.number().min(1),   //?limit=10
+        'offset': joi.number().min(0),  //?offset=0
+        'name': joi.string(),   //?name=Mamba
+        'qTags': joi.string(),  // ?qTags=peripherals,computers
+        'attributes': joi.object().pattern(/^/, joi.string()),  //?attributes[colors]=white,grey&attributes[sizes]=13in
+        'provider': joi.string(),   //?provider=Razer
+        'status': joi.string().valid(['available', 'pipeline']) //?status=available
     })
 }
 
@@ -62,5 +62,6 @@ router.post('/', (req, res, next) => joiValidator(createProductSchema, req, res,
 router.get('/:sku', (req, res, next) => joiValidator(getProductSchema, req, res, next), productController.getProduct);
 router.put('/:sku', (req, res, next) => joiValidator(updateProductSchema, req, res, next), productController.updateProduct);
 router.delete('/:sku', (req, res, next) => joiValidator(getProductSchema, req, res, next), productController.deleteProduct);
+router.get('/:sku/similar', (req, res, next) => joiValidator(getProductSchema, req, res, next), productController.getSimilarProducts);
 
 module.exports = router;

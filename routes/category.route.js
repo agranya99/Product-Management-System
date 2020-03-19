@@ -7,9 +7,9 @@ const router = express.Router();
 
 const filterCategoriesSchema = {
     query: joi.object({
-        'limit': joi.number().min(1),
-        'offset': joi.number().min(0),
-        'name': joi.string()
+        'limit': joi.number().min(1),   //?limit=10
+        'offset': joi.number().min(0),  //?offset=0
+        'name': joi.string()    //?name=Peripherals
     })
 }
 
@@ -42,5 +42,7 @@ router.post('/', (req, res, next) => joiValidator(createCategorySchema, req, res
 router.get('/:categoryID', (req, res, next) => joiValidator(getCategorySchema, req, res, next), categoryController.getCategory);
 router.put('/:categoryID', (req, res, next) => joiValidator(updateCategorySchema, req, res, next), categoryController.updateCategory);
 router.delete('/:categoryID', (req, res, next) => joiValidator(getCategorySchema, req, res, next), categoryController.deleteCategory);
+router.get('/:categoryID/subCategories', (req, res, next) => joiValidator(getCategorySchema, req, res, next), categoryController.getSubCategories);
+router.get('/:categoryID/products', (req, res, next) => joiValidator(getCategorySchema, req, res, next), categoryController.getCategoryProducts);
 
 module.exports = router;

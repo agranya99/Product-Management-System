@@ -17,34 +17,6 @@ async function catchDBErr(err, res) {
     });
 }
 
-exports.createProvider = async (req, res) => {
-    const provider = new Provider(req.body);
-
-    provider.save()
-        .then((provider) => {
-            return res.status(200).send({
-                providerID: provider.providerID,
-                status: 200,
-                message: "Provider Created Successfully"
-            });
-        })
-        .catch((err) => catchDBErr(err, res))
-};
-
-exports.getProvider = async (req, res) => {
-    Provider.find({ providerID: req.params.providerID })
-        .then((provider) => {
-            if (provider.length) {
-                return res.status(200).send(provider);
-            }
-            return res.status(404).send({
-                status: 404,
-                message: "Provider not found with providerID: " + req.params.providerID
-            });
-        })
-        .catch((err) => catchDBErr(err, res))
-};
-
 exports.filterProviders = async (req, res) => {
     const pageOptions = {
         offset: parseInt(req.query.offset, 10) || 0,
@@ -61,6 +33,7 @@ exports.filterProviders = async (req, res) => {
     Provider.find(queryObj)
         .skip(pageOptions.offset)
         .limit(pageOptions.limit)
+        .select(['-_id', '-__v'])
         .then((provider) => {
             if (provider.length) {
                 return res.status(200).send(provider);
@@ -68,6 +41,35 @@ exports.filterProviders = async (req, res) => {
             return res.status(404).send({
                 status: 404,
                 message: "No Such Providers Found."
+            });
+        })
+        .catch((err) => catchDBErr(err, res))
+};
+
+exports.createProvider = async (req, res) => {
+    const provider = new Provider(req.body);
+
+    provider.save()
+        .then((provider) => {
+            return res.status(200).send({
+                providerID: provider.providerID,
+                status: 200,
+                message: "Provider Created Successfully"
+            });
+        })
+        .catch((err) => catchDBErr(err, res))
+};
+
+exports.getProvider = async (req, res) => {
+    Provider.find({ providerID: req.params.providerID })
+        .select(['-_id', '-__v'])
+        .then((provider) => {
+            if (provider.length) {
+                return res.status(200).send(provider);
+            }
+            return res.status(404).send({
+                status: 404,
+                message: "Provider not found with providerID: " + req.params.providerID
             });
         })
         .catch((err) => catchDBErr(err, res))
@@ -83,6 +85,7 @@ exports.updateProvider = async (req, res) => {
     }
     // Find and update category with the request body
     Provider.findOneAndUpdate({ providerID: req.params.providerID }, req.body, { new: true })
+        .select(['-_id', '-__v'])
         .then((provider) => {
             if (!provider) {
                 return res.status(404).send({

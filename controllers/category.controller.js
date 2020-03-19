@@ -1,4 +1,5 @@
 const Category = require('../models/category.model');
+const Product = require('../models/product.model');
 
 // Utility function to handle response in case of DB Errors
 async function catchDBErr(err, res) {
@@ -17,6 +18,32 @@ async function catchDBErr(err, res) {
     });
 }
 
+exports.filterCategories = async (req, res) => {
+    const pageOptions = {
+        offset: parseInt(req.query.offset, 10) || 0,
+        limit: parseInt(req.query.limit, 10) || 10
+    }
+    const queryObj = {};
+
+    if (req.query.name && req.query.name !== '') {
+        queryObj["name"] = req.query.name;
+    }
+    Category.find(queryObj)
+        .skip(pageOptions.offset)
+        .limit(pageOptions.limit)
+        .select(['-_id', '-__v'])
+        .then((category) => {
+            if (category.length) {
+                return res.status(200).send(category);
+            }
+            return res.status(404).send({
+                status: 404,
+                message: "No Such Categories Found."
+            });
+        })
+        .catch((err) => catchDBErr(err, res))
+};
+
 exports.createCategory = async (req, res) => {
     const category = new Category(req.body);
 
@@ -33,6 +60,7 @@ exports.createCategory = async (req, res) => {
 
 exports.getCategory = async (req, res) => {
     Category.find({ categoryID: req.params.categoryID })
+        .select(['-_id', '-__v'])
         .then((category) => {
             if (category.length) {
                 return res.status(200).send(category);
@@ -40,31 +68,6 @@ exports.getCategory = async (req, res) => {
             return res.status(404).send({
                 status: 404,
                 message: "Category not found with categoryID: " + req.params.categoryID
-            });
-        })
-        .catch((err) => catchDBErr(err, res))
-};
-
-exports.filterCategories = async (req, res) => {
-    const pageOptions = {
-        offset: parseInt(req.query.offset, 10) || 0,
-        limit: parseInt(req.query.limit, 10) || 10
-    }
-    const queryObj = {};
-
-    if (req.query.name && req.query.name !== '') {
-        queryObj["name"] = req.query.name;
-    }
-    Category.find(queryObj)
-        .skip(pageOptions.offset)
-        .limit(pageOptions.limit)
-        .then((category) => {
-            if (category.length) {
-                return res.status(200).send(category);
-            }
-            return res.status(404).send({
-                status: 404,
-                message: "No Such Categories Found."
             });
         })
         .catch((err) => catchDBErr(err, res))
@@ -80,6 +83,7 @@ exports.updateCategory = async (req, res) => {
     }
     // Find and update category with the request body
     Category.findOneAndUpdate({ categoryID: req.params.categoryID }, req.body, { new: true })
+        .select(['-_id', '-__v'])
         .then((category) => {
             if (!category) {
                 return res.status(404).send({
@@ -109,3 +113,61 @@ exports.deleteCategory = async (req, res) => {
         })
         .catch((err) => catchDBErr(err, res))
 };
+
+exports.getSubCategories = async (req, res) => {
+    Category.find({ categoryID: req.params.categoryID })
+        .then((category) => {
+            if (category.length) {
+                Category.find({ parentCategoryID: category[0].categoryID })
+                    .select(['-_id', '-__v'])
+                    .then((category) => {
+                        if (category.length) {
+                            res.status(200).send(category);
+                        }
+                        else {
+                            return res.status(404).send({
+                                status: 404,
+                                message: "No Sub-Categories for categoryID: " + req.params.categoryID
+                            });
+                        }
+                    })
+                    .catch((err) => catchDBErr(err, res))
+            }
+            else {
+                return res.status(404).send({
+                    status: 404,
+                    message: "Category not found with categoryID: " + req.params.categoryID
+                });
+            }
+        })
+        .catch((err) => catchDBErr(err, res))
+};
+
+exports.getCategoryProducts = async (req, res) => {
+    Category.find({ categoryID: req.params.categoryID })
+        .then((category) => {
+            if (category.length) {
+                Product.find({ categoryID: category[0].categoryID })
+                    .select(['-_id', '-__v'])
+                    .then((product) => {
+                        if (product.length) {
+                            res.status(200).send(product);
+                        }
+                        else {
+                            return res.status(404).send({
+                                status: 404,
+                                message: "No Products for categoryID: " + req.params.categoryID
+                            });
+                        }
+                    })
+                    .catch((err) => catchDBErr(err, res))
+            }
+            else {
+                return res.status(404).send({
+                    status: 404,
+                    message: "Category not found with categoryID: " + req.params.categoryID
+                });
+            }
+        })
+        .catch((err) => catchDBErr(err, res))
+}

@@ -38,9 +38,16 @@ exports.filterProducts = async (req, res) => {
             queryObj["attributes." + key] = val;
         });
     }
-
+    var qTags = [];
+    if (req.query.qTags && req.query.qTags !== '') {
+        var val = req.query.qTags.split(',');
+        val.forEach(function (qTag) {
+            qTags.push({ "qTags": qTag });
+        });
+    }
     if (req.query.provider && req.query.provider !== '') {
-        Provider.findOne({ name: req.query.provider })
+        Provider
+            .findOne({ name: req.query.provider })
             .then((provider) => {
                 if (provider.length) {
                     queryObj["providerID"] = provider.providerID;
@@ -55,7 +62,12 @@ exports.filterProducts = async (req, res) => {
             .catch((err) => catchDBErr(err, res))
 
     }
-    Product.find(queryObj)
+    if (qTags.length !== 0) {
+        queryObj["$or"] = qTags;
+    }
+    Product
+        .find(queryObj)
+        .select(['-_id', '-__v'])
         .skip(pageOptions.offset)
         .limit(pageOptions.limit)
         .then((product) => {
@@ -85,7 +97,9 @@ exports.createProduct = async (req, res) => {
 };
 
 exports.getProduct = async (req, res) => {
-    Product.find({ sku: req.params.sku })
+    Product
+        .find({ sku: req.params.sku })
+        .select(['-_id', '-__v'])
         .then((product) => {
             if (product.length) {
                 return res.status(200).send(product);  
@@ -108,7 +122,9 @@ exports.updateProduct = async (req, res) => {
         });
     }
     // Find and update product with the request body
-    Product.findOneAndUpdate({ sku: req.params.sku }, req.body, { new: true })
+    Product
+        .findOneAndUpdate({ sku: req.params.sku }, req.body, { new: true })
+        .select(['-_id', '-__v'])
         .then((product) => {
             if (!product) {
                 return res.status(404).send({
@@ -129,7 +145,8 @@ exports.updateProduct = async (req, res) => {
 };
 
 exports.deleteProduct = async (req, res) => {
-    Product.findOneAndRemove({ sku: req.params.sku })
+    Product
+        .findOneAndRemove({ sku: req.params.sku })
         .then((product) => {
             if (!product) {
                 return res.status(404).send({
@@ -142,6 +159,49 @@ exports.deleteProduct = async (req, res) => {
                 status: 200,
                 message: "Product deleted successfully"
             });
+        })
+        .catch((err) => catchDBErr(err, res))
+};
+
+exports.getSimilarProducts = async (req, res) => {
+    Product
+        .find({ sku: req.params.sku })
+        .then((product) => {
+            if (product.length) {
+                if (product[0].qTags.length) {
+                    var qTags = [];
+                    const queryObj = {};
+                    product[0].qTags.forEach(function (qTag) {
+                        qTags.push({ "qTags": qTag });
+                    });
+                    queryObj["$and"] = [];
+                    queryObj["$and"].push({ "sku": { "$ne": product[0].sku } });
+                    queryObj["$and"].push({ "$or": qTags });
+                    //queryObj["$or"] = qTags;
+                    Product
+                        .find(queryObj)
+                        .and([])
+                        .select(['-_id', '-__v'])
+                        .then((product) => {
+                            if (product.length) {
+                                return res.status(200).send(product);
+                            }
+                        })
+                        .catch((err) => catchDBErr(err, res))
+                }
+                else {
+                    return res.status(404).send({
+                        status: 404,
+                        message: "No Similar Products Found based on qTags."
+                    });
+                }
+            }
+            else {
+                return res.status(404).send({
+                    status: 404,
+                    message: "Product not found with sku: " + req.params.sku
+                });
+            }
         })
         .catch((err) => catchDBErr(err, res))
 };
