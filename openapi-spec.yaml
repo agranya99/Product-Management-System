@@ -8,20 +8,20 @@ servers:
 info:
   version: "1.0.0"
   title: Product Management System
-  description: REST API for Product Management System.
+  description: REST API for Product Management System. 
   contact:
     email: agranyasingh5@gmail.com
   license:
     name: MIT License
     url: 'https://opensource.org/licenses/MIT'
-
+    
 # OAuth 2.0 Client Credentials Flow
 # Applying security globally
 security:
-  - pms_auth:
+  - pms:
       - read
       - write
-
+      
 # tags
 #   - products
 #   - categories
@@ -49,9 +49,9 @@ security:
 #   - responses
 #       reusable responses (NotFound, InvalidRequest...)
 #   - securitySchemes
-#       pms_auth  (OAuth2.0)
+#       pms  (OAuth2.0)
 
-
+      
 tags:
   - name: products
     description: Fetch, Add, Modify and Remove Products
@@ -63,28 +63,8 @@ tags:
     description: Fetch, Add, Modify and Remove Partner Businesses (Providers)
   - name: misc
     description: Miscellaneous
-
+      
 paths:
-  /:
-    get:
-      tags:
-      - misc
-      summary: Fetch list of all valid endpoints
-      description: Use this to fetch a list of all valid API endpoints
-      operationId: GetEndPointList
-      responses:
-        200:
-          description: List of all endpoints
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  listOfEndpoints:
-                    type: array
-                    items:
-                      type: string
-
   /products:
     get:
       tags:
@@ -102,21 +82,21 @@ paths:
             type: object
             additionalProperties:
               type: string
+            example:
+              Filter by attributes '?attributes[colors]=white,black'
           style: deepObject
           explode: false
         - in: query
-          name: price
-          schema:
-            type: number
-        - in: query
           name: qTags
-          schema:
+          schema: 
             type: array
             uniqueItems: true
             items:
               type: string
           style: form
           explode: false
+          description:
+            Filter by qTags '?qTags=gaming,student'
         - in: query
           name: status
           schema:
@@ -124,6 +104,9 @@ paths:
             enum:
               - available
               - pipeline
+          description:
+            Filter by stats '?status=available'
+            
       responses:
         200:
           description: Returns a list of JSON objects with details of all products (stock etc)
@@ -140,7 +123,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         5XX:
           $ref: '#/components/responses/ServerError'
-
+                  
     post:
       tags:
       - products
@@ -160,28 +143,7 @@ paths:
           $ref: '#/components/responses/InvalidRequest'
         5XX:
           $ref: '#/components/responses/ServerError'
-
-    put:
-      tags:
-      - products
-      summary: Update an existing product
-      description: Request Body must contain  product sku and details
-      operationId: UpdateProduct
-      requestBody:
-        $ref: '#/components/requestBodies/ProductReqBody'
-      responses:
-        200:
-          description: Product was updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrMessage'
-        400:
-          $ref: '#/components/responses/InvalidRequest'
-        404:
-          $ref: '#/components/responses/NotFound'
-        5XX:
-          $ref: '#/components/responses/ServerError'
+      
 
   /products/{sku}:
     get:
@@ -206,19 +168,18 @@ paths:
         5XX:
           $ref: '#/components/responses/ServerError'
 
-    post:
+    put:
       tags:
       - products
-      summary: Add a new product via a form
-      description: Add a new product to the database via a form
-      operationId: CreateProductForm
+      summary: Update an existing product
+      description: Request Body must contain  product sku and details
+      operationId: UpdateProduct
       parameters:
-      - $ref: '#/components/parameters/SKUParam'
+        - $ref: '#/components/parameters/SKUParam'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
-              required: [name, categoryID, price, status]
               properties:
                 name:
                   type: string
@@ -265,16 +226,18 @@ paths:
         required: true
       responses:
         200:
-          description: Product was added successfully
+          description: Product was updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrMessage'
+                $ref: '#/components/schemas/Product'
         400:
           $ref: '#/components/responses/InvalidRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
         5XX:
           $ref: '#/components/responses/ServerError'
-
+          
     delete:
       tags:
       - products
@@ -289,13 +252,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrMessage'
+                $ref: '#/components/schemas/OKMessage'
         404:
           $ref: '#/components/responses/NotFound'
         5XX:
           $ref: '#/components/responses/ServerError'
-
-
+                
+              
   /categories:
     get:
       tags:
@@ -307,11 +270,6 @@ paths:
         - $ref: '#/components/parameters/LimitParam'
         - $ref: '#/components/parameters/OffsetParam'
         - $ref: '#/components/parameters/NameParam'
-        - in: query
-          name: parentCategoryID
-          description: Filter by Parent Category ID
-          schema:
-            type: integer
 
       responses:
         200:
@@ -329,29 +287,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         5XX:
           $ref: '#/components/responses/ServerError'
-
-    put:
-      tags:
-      - categories
-      summary: Update an existing category
-      description: Request body must contain the category ID and the details to be updated. To remove parent from a category, set parentCategoryID to -1
-      operationId: UpdateCategory
-      requestBody:
-        $ref: '#/components/requestBodies/CategoryReqBody'
-      responses:
-        200:
-          description: Category was updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrMessage'
-        400:
-          $ref: '#/components/responses/InvalidRequest'
-        404:
-          $ref: '#/components/responses/NotFound'
-        5XX:
-          $ref: '#/components/responses/ServerError'
-
+      
     post:
       tags:
       - categories
@@ -366,12 +302,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrMessage'
+                $ref: '#/components/schemas/OKMessage'
         400:
           $ref: '#/components/responses/InvalidRequest'
         5XX:
           $ref: '#/components/responses/ServerError'
-
+      
   /categories/{categoryID}:
     get:
       tags:
@@ -395,19 +331,18 @@ paths:
         5XX:
           $ref: '#/components/responses/ServerError'
 
-    post:
+    put:
       tags:
       - categories
-      summary: Add a new category via a form
-      description: Add a new category to the database via a form
-      operationId: CreateCategoryForm
+      summary: Update an existing category
+      description: Request body must contain the category ID and the details to be updated. To remove parent from a category, set parentCategoryID to -1
+      operationId: UpdateCategory
       parameters:
-      - $ref: '#/components/parameters/CategoryIDParam'
+        - $ref: '#/components/parameters/CategoryIDParam'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
-              required: [name]
               properties:
                 name:
                   type: string
@@ -419,16 +354,18 @@ paths:
         required: true
       responses:
         200:
-          description: Category was added successfully
+          description: Category was updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrMessage'
+                $ref: '#/components/schemas/Category'
         400:
           $ref: '#/components/responses/InvalidRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
         5XX:
           $ref: '#/components/responses/ServerError'
-
+                
     delete:
       tags:
       - categories
@@ -444,18 +381,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrMessage'
+                $ref: '#/components/schemas/OKMessage'
         404:
           $ref: '#/components/responses/NotFound'
         5XX:
           $ref: '#/components/responses/ServerError'
-
+                
   /categories/{categoryID}/subCategories:
     get:
       tags:
       - utilities
       summary: Get sub categories of a category
-      description: Get a list of all first level sub-categories of a given category
+      description: Get a list of all first level sub-categories of a given category 
       operationId: GetSubCategories
       parameters:
       - $ref: '#/components/parameters/CategoryIDParam'
@@ -477,7 +414,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         5XX:
           $ref: '#/components/responses/ServerError'
-
+                
   /categories/{categoryID}/products:
     get:
       tags:
@@ -505,7 +442,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         5XX:
           $ref: '#/components/responses/ServerError'
-
+                
   /products/{sku}/similar:
     get:
       tags:
@@ -533,7 +470,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         5XX:
           $ref: '#/components/responses/ServerError'
-
+                
   /providers:
     get:
       tags:
@@ -545,6 +482,12 @@ paths:
         - $ref: '#/components/parameters/LimitParam'
         - $ref: '#/components/parameters/OffsetParam'
         - $ref: '#/components/parameters/NameParam'
+        - in: query
+          name: email
+          schema:
+            type: string
+          example:
+            ?email=support@angel.com
       responses:
         200:
           description: Returns a JSON object with details of Provider
@@ -558,28 +501,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         5XX:
           $ref: '#/components/responses/ServerError'
-    put:
-      tags:
-      - providers
-      summary: Update an existing Provider (Partner Business)
-      description: Request body must contain the provider ID and details to be updated
-      operationId: UpdateProvider
-      requestBody:
-        $ref: '#/components/requestBodies/ProviderReqBody'
-      responses:
-        200:
-          description: Provider was updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrMessage'
-        400:
-          $ref: '#/components/responses/InvalidRequest'
-        404:
-          $ref: '#/components/responses/NotFound'
-        5XX:
-          $ref: '#/components/responses/ServerError'
-
+      
     post:
       tags:
       - providers
@@ -594,12 +516,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrMessage'
+                $ref: '#/components/schemas/OKMessage'
         400:
           $ref: '#/components/responses/InvalidRequest'
         5XX:
           $ref: '#/components/responses/ServerError'
-
+      
   /providers/{providerID}:
     get:
       tags:
@@ -622,7 +544,48 @@ paths:
           $ref: '#/components/responses/NotFound'
         5XX:
           $ref: '#/components/responses/ServerError'
-
+          
+    put:
+      tags:
+      - providers
+      summary: Update an existing Provider (Partner Business)
+      description: Request body must contain the provider ID and details to be updated
+      operationId: UpdateProvider
+      parameters:
+        - $ref: '#/components/parameters/ProviderIDParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  description: Name of the provider
+                  example: Angel Inc.
+                website:
+                  type: string
+                  format: uri
+                  description: Website of Provider
+                  example: www.angel.com/product
+                email:
+                  type: string
+                  format: email
+                  description: Contact e-mail of Provider
+                  example: support@angel.com
+      responses:
+        200:
+          description: Provider was updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+        400:
+          $ref: '#/components/responses/InvalidRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+                
     delete:
       tags:
       - providers
@@ -633,16 +596,49 @@ paths:
         - $ref: '#/components/parameters/ProviderIDParam'
       responses:
         200:
-          description: Successfully deleted the Provider
+          description: Successfully deleted the Provider 
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrMessage'
+                $ref: '#/components/schemas/OKMessage'
         404:
           $ref: '#/components/responses/NotFound'
         5XX:
           $ref: '#/components/responses/ServerError'
-
+  /:
+    get:
+      tags:
+      - misc
+      summary: Fetch list of all valid endpoints
+      description: Use this to fetch a list of all valid API endpoints
+      operationId: GetEndPointList
+      responses:
+        200:
+          description: List of all endpoints
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  listOfEndpoints:
+                    type: array
+                    items:
+                      type: string
+              example: 
+                - /
+                - /products
+                - '/products/:sku'
+                - '/products/:sku/similar'
+                - /categories
+                - '/categories/:categoryID'
+                - '/categories/:categoryID/subCategories'
+                - '/categories/:categoryID/products'
+                - /providers
+                - '/providers/:providerID'
+                - 'Search Query Sample: GET /products?limit=10&offset=0&qTags=gaming,mouse&attributes[colors]=white,silver'
+                - 'Search Query Sample: GET /categories?name=Peripherals'
+                - 'Search Query Sample: GET /providers?name=Razer'
+            
   /*:
     get:
       tags:
@@ -654,7 +650,7 @@ paths:
       responses:
         404:
           $ref: '#/components/responses/NotFound'
-
+                
     put:
       tags:
       - misc
@@ -665,7 +661,7 @@ paths:
       responses:
         404:
           $ref: '#/components/responses/NotFound'
-
+                
     post:
       tags:
       - misc
@@ -676,7 +672,7 @@ paths:
       responses:
         404:
           $ref: '#/components/responses/NotFound'
-
+                
     delete:
       tags:
       - misc
@@ -687,7 +683,7 @@ paths:
       responses:
         404:
           $ref: '#/components/responses/NotFound'
-
+                
 components:
   schemas:
     Product:
@@ -797,25 +793,19 @@ components:
           format: email
           description: Contact e-mail of Provider
           example: support@angel.com
-    ErrMessage:
-      type: object
-      properties:
-        status:
-          type: string
-          example: Error type
-        message:
-          type: string
-          example: Error detailed description
     OKMessage:
       type: object
       properties:
-        id:
+        id: 
           type: string
           example: object ID
+        status:
+          type: number
+          example: 200
         message:
           type: string
           example: C/U/D Operation successful
-
+        
   # reusable parameters
   parameters:
     LimitParam:
@@ -823,19 +813,25 @@ components:
       name: limit
       schema:
         type: integer
-      description: The numbers of items to return
+      description: The numbers of items to return '?limit=10'
+      example:
+        10
     OffsetParam:
       in: query
       name: offset
       schema:
         type: integer
-      description: The number of items to skip before starting to collect the result set
+      description: The number of items to skip before starting to collect the result set '?offset=0'
+      example:
+        0
     NameParam:
       in: query
       name: name
-      description: Filter by name attribute of object
-      schema:
+      description: Filter by name attribute of object '?name=Sensei'
+      schema: 
         type: string
+      example:
+        Mamba
     SKUParam:
       name: sku
       in: path
@@ -886,14 +882,28 @@ components:
         application/json:
           # error description with specific info
           schema:
-            $ref: '#/components/schemas/ErrMessage'
+            type: object
+            properties:
+              status:
+                type: number
+                example: 404
+              message: 
+                type: string
+                example: Resource Not Found (+details)
     InvalidRequest:
       description: Invalid request
       content:
         application/json:
           # error description with specific info
           schema:
-            $ref: '#/components/schemas/ErrMessage'
+            type: object
+            properties:
+              status:
+                type: number
+                example: 400
+              message: 
+                type: string
+                example: Invalid Request (+details)
     ServerError:
       description: Unexpected error
       content:
@@ -901,13 +911,13 @@ components:
           schema:
             type: object
             properties:
-              message:
+              message: 
                 type: string
                 example: Unexpected server error
 
   # OAuth 2.0 Client Credentials Flow
-  securitySchemes:
-    pms_auth:
+  securitySchemes:  
+    pms:
       type: oauth2
       flows:
         clientCredentials:
