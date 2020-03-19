@@ -1,9 +1,21 @@
 const express = require('express');
 const joi = require('joi');
-const productController = require('../controllers/product.controller');
 const joiValidator = require('../middlewares/joiValidator');
+const productController = require('../controllers/product.controller');
 
 const router = express.Router();
+
+const filterProductsSchema = {
+    query: joi.object({
+        'limit': joi.number().min(1),
+        'offset': joi.number().min(0),
+        'name': joi.string(),
+        //'qTags': joi.string(),  // ?qTags=furniture,table
+        'attributes': joi.object().pattern(/^/, joi.string()),
+        'provider': joi.string(),
+        'status': joi.string().valid(['available', 'pipeline'])
+    })
+}
 
 const createProductSchema = {
     body: joi.object({
@@ -45,9 +57,10 @@ const updateProductSchema = {
     })
 }
 
-router.get('/', productController.getProducts);
+router.get('/', (req, res, next) => joiValidator(filterProductsSchema, req, res, next), productController.filterProducts);
 router.post('/', (req, res, next) => joiValidator(createProductSchema, req, res, next), productController.createProduct);
 router.get('/:sku', (req, res, next) => joiValidator(getProductSchema, req, res, next), productController.getProduct);
 router.put('/:sku', (req, res, next) => joiValidator(updateProductSchema, req, res, next), productController.updateProduct);
 router.delete('/:sku', (req, res, next) => joiValidator(getProductSchema, req, res, next), productController.deleteProduct);
+
 module.exports = router;
