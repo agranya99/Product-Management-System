@@ -1,0 +1,949 @@
+{
+	"info": {
+		"_postman_id": "0f64c7e1-b10e-4db1-909e-5b326e0b0b60",
+		"name": "Product-Management-System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:3000/products",
+			"protocolProfileBehavior": {
+				"followAuthorizationHeader": true
+			},
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Bearer",
+						"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmg5ckxhd1hoV2o0WHp1QTJjWEdHV0dhUURMR2Z1bG1qUl9lUnZuSkkweFkiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwLyIsImlhdCI6MTU4NDUzMjg1OSwiZXhwIjoxNTg0NjE5MjU5LCJjaWQiOiIwb2E0NmVyaXRSRDRNTUVFZjR4NiIsInNjcCI6WyJwbXMiXSwic3ViIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYifQ.C75G3TRr13O0yAEvDxjrxTRSKP9Te-d71vuhMqBE1zAIOrn4t6a6_Y0FWBqE0t5sHuiMgD_bUvnZASS7Zozvi3Xbc9352K3TO1kzNlvCmPab4UHPN15VMEbcIVWrmxz3LcWADXUZVxiPjY19SeaWAVJiGNlBOc7ZAaXWo6kgeX-uAZRcWLia6mwopuAegKCOqX7ktHJHTUWeqS6GYBgFoBH4uXApusPsXs7CWM6JfvzEhQm_mzx5N43i09AsKy54Y7ecPHOTdqYHHOFY9ePmxHURJmBOF9r1zDAra948hoK3c4luHjcE0QlVXfyaNWXKBQ5G7l19hoEwZDXqKYkqGw",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"sku\": \"123abc45\", \n\t\"name\": \"Blade Stealth\", \n\t\"categoryID\": 1, \n\t\"qTags\": [\"laptop\", \"gaming\", \"student\", \"creator\"], \n\t\"attributes\": { \"colors\": [\"white\", \"black\", \"silver\"], \"sizes\": [\"13in\", \"15in\"] },\n\t\"imageURLs\":[\"D:/blade/image001.png\"], \n\t\"price\": 115999.00,\n\t\"providerID\": 1,\n\t\"launchDate\": \"2020-03-15\",\n\t\"stock\": 3500,\n\t\"status\": \"available\" \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/products",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/products/123abc45",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/products/123abc45",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products",
+						"123abc45"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/products/123abc45",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\": \"Blade Stealth\", \"categoryID\": 1 }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/products/123abc45",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products",
+						"123abc45"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/products/1111aa11",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/products/1111aa11",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products",
+						"1111aa11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/products?offset=1&limit=1",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/products?offset=1&limit=1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/products?qTags=marker&attributes[colors]=black",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/products?qTags=marker&attributes[colors]=black",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "qTags",
+							"value": "marker"
+						},
+						{
+							"key": "attributes[colors]",
+							"value": "black"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/categories",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"categoryID\" : 6, \"name\": \"Test\", \"parentCategoryID\": -1}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/categories",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/categories/1",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/categories/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"categories",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/categories/3",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Stationery\", \"parentCategoryID\": -1}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/categories/3",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"categories",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/categories?offset=1&limit=1",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/categories?offset=1&limit=1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"categories"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/categories?name=Peripherals",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/categories?name=Peripherals",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"categories"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Peripherals"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/providers",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"providerID\": 2, \"name\": \"Camlin\", \"website\": \"https://www.kokuyocamlin.com/\", \"email\": \"stationery@camlin.com\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/providers",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"providers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/providers",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/providers",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"providers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/providers?name=Camlin",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/providers?name=Camlin",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"providers"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Camlin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/providers/1",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\" : \"Razer Inc\", \"email\": \"peripherals.support@razer.com\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/providers/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"providers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/providers/3",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/providers/3",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"providers",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/products?qTags=gaming,student&attributes[colors]=white",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/products?qTags=gaming,student&attributes[colors]=white",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "qTags",
+							"value": "gaming,student"
+						},
+						{
+							"key": "attributes[colors]",
+							"value": "white"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/categories/1/subCategories",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/categories/1/subCategories",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"categories",
+						"1",
+						"subCategories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/products/123abc45/similar",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/products/123abc45/similar",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products",
+						"123abc45",
+						"similar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/products?name=Blade Stealth",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/products?name=Blade Stealth",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Blade Stealth"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/categories/3/products",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxRnY0RzJqZWsweW5XNGRkVkotanNheU1qMlB3MjMtX1NCMHZuRENEMGZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmxXZG5nRmVuMHlOLWUycEE2MWVUdnIwM3owQmJlQ2g0UjVlSWFBUzJSRlUiLCJpc3MiOiJodHRwczovL2Rldi05NDE1NzEub2t0YS5jb20vb2F1dGgyL2F1czQ2cHludDBNSU5XSGhtNHg2IiwiYXVkIjoiMG9hNDZlcml0UkQ0TU1FRWY0eDYiLCJpYXQiOjE1ODQ1MzcxMTAsImV4cCI6MTU4NDYyMzUxMCwiY2lkIjoiMG9hM3h3bXVwdDJud1ZNejM0eDYiLCJzY3AiOlsicG1zIl0sInN1YiI6IjBvYTN4d211cHQybndWTXozNHg2In0.QmuqGO6rUEN9dFB_XOhDX13g740zD0OJA0tmjm1zKxtg1IqWfojkrJOdZ5b9FQQUByuaPo2AEpG6jsRPVrdhrWcNoCnFlIcVe2lfg6WOS6d1_lZmr24-dc24LEyTf0PX5xvqGZ4wEWEgSilIWqN55HLY3xr-FOV3NJ36-ovG8hY3pwzt-1-OBbu-KRpdVLHB1MsDSae8H0gZMievchOl7yE-tjaJzOB20EYX-YF2R8h-VedDityR720y3jW-rn8kbioJBoeYStJ4fDhjPmkqg1K50if1SLIZOHQPbbU56ZAjn01e4nq6S3azUwPTgURzudZlLjGVr0KzA5ouhE9avg",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/categories/3/products",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"categories",
+						"3",
+						"products"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
