@@ -86,6 +86,8 @@ Fetch a list of Providers (Partner Businesses) via **queries**
 Like:
 - `localhost:3000/providers?name=Razer`
 
+![searchProductsByqTagsAndAttributes](https://github.com/agranya99/Product-Management-System/blob/master/screenshots/searchProductsByqTagsAndAttributes.PNG "searchProductsByqTagsAndAttributes") ![searchCategoriesByName](https://github.com/agranya99/Product-Management-System/blob/master/screenshots/searchCategoriesByName.PNG "searchCategoriesByName")
+
 
 | Method | Endpoint                               | Description                                                                           |
 |--------|----------------------------------------|---------------------------------------------------------------------------------------|
