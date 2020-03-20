@@ -88,6 +88,9 @@ Like:
 
 | ![searchProductsByqTagsAndAttributes](https://github.com/agranya99/Product-Management-System/blob/master/screenshots/searchProductsByqTagsAndAttributes.PNG "searchProductsByqTagsAndAttributes") | ![searchCategoriesByName](https://github.com/agranya99/Product-Management-System/blob/master/screenshots/searchCategoriesByName.PNG "searchCategoriesByName") |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ![paginateProducts](https://github.com/agranya99/Product-Management-System/blob/master/screenshots/paginateProducts.PNG "paginateProducts")                                                       | ![getSimilarProducts](https://github.com/agranya99/Product-Management-System/blob/master/screenshots/getSimilarProducts.PNG "getSimilarProducts")             |
+
+
 
 | Method | Endpoint                               | Description                                                                           |
 |--------|----------------------------------------|---------------------------------------------------------------------------------------|
