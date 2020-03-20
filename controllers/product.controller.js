@@ -1,5 +1,5 @@
 const Product = require('../models/product.model');
-const Provider = require('../models/product.model');
+const Provider = require('../models/provider.model');
 
 
 // Utility function to handle response in case of DB Errors
@@ -10,13 +10,14 @@ async function catchDBErr(err, res) {
         return res.status(400).send({
             status: 400,
             message: err.message
-         });
-
-    // 500: DB connection issues... 
-    return res.status(500).send({
-        status: 500,
-        message: "Oops! Internal server error."
-    });
+        });
+    else {
+        // 500: DB connection issues... 
+        return res.status(500).send({
+            status: 500,
+            message: "Oops! Internal server error."
+        });
+    }
 }
 
 exports.filterProducts = async (req, res) => {
@@ -46,11 +47,11 @@ exports.filterProducts = async (req, res) => {
         });
     }
     if (req.query.provider && req.query.provider !== '') {
-        Provider
-            .findOne({ name: req.query.provider })
+        await Provider
+            .find({ name: req.query.provider })
             .then((provider) => {
                 if (provider.length) {
-                    queryObj["providerID"] = provider.providerID;
+                    queryObj["providerID"] = provider[0].providerID;
                 }
                 else {
                     return res.status(404).send({

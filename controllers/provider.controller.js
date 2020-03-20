@@ -9,12 +9,13 @@ async function catchDBErr(err, res) {
             status: 400,
             message: err.message
         });
-
-    // 500: DB connection issues... 
-    return res.status(500).send({
-        status: 500,
-        message: "Oops! Internal server error."
-    });
+    else {
+        // 500: DB connection issues... 
+        return res.status(500).send({
+            status: 500,
+            message: "Oops! Internal server error."
+        });
+    }
 }
 
 exports.filterProviders = async (req, res) => {
