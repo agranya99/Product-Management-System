@@ -5,7 +5,7 @@ A scalable REST API developed in Node.Js to facilitate CRUD and utility operatio
 ## Softwares and Frameworks
 - OpenAPI 3.0 Specification
 - express.js
-- OAuth 2.0
+- OAuth 2.0 (Okta Authorization Server)
 - JOI 
 - Mongoose
 - MongoDB Atlas
@@ -21,7 +21,22 @@ A scalable REST API developed in Node.Js to facilitate CRUD and utility operatio
 
 ### Authorization
 
-
+- Create a POST Request to `{ ISSUER }/v1/token` == <https://dev-941571.okta.com/oauth2/aus46pynt0MINWHhm4x6/v1/token>  with
+  - `Basic` Authorization Header with `{ clientID }` and `{ clientSecret }` from .env
+  - Parameters: `scope` from .env and `grant_type = client_credentials`
+  
+- If credentials are valid, the application will receive back a response with `Bearer` token (around 800 characters)
+  - ```
+    {
+    "access_token": "eyJhbG[...]1LQ",
+    "token_type": "Bearer",
+    "expires_in": 86400,
+    "scope": "pms"
+    }
+    ```
+    
+- Pass this `Bearer` token as Request Header of your requests to the REST API
+  
 
 ## Features
 
