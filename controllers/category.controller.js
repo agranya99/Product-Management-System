@@ -19,13 +19,14 @@ async function catchDBErr(err, res) {
     }
 }
 
+// facilitate searching of categories
 exports.filterCategories = async (req, res) => {
     const pageOptions = {
         offset: parseInt(req.query.offset, 10) || 0,
         limit: parseInt(req.query.limit, 10) || 10
     }
     const queryObj = {};
-
+    // search by name
     if (req.query.name && req.query.name !== '') {
         queryObj["name"] = req.query.name;
     }
@@ -35,6 +36,7 @@ exports.filterCategories = async (req, res) => {
         .select(['-_id', '-__v'])
         .then((category) => {
             if (category.length) {
+                // All OK
                 return res.status(200).send(category);
             }
             return res.status(404).send({
@@ -50,6 +52,7 @@ exports.createCategory = async (req, res) => {
 
     category.save()
         .then((category) => {
+            // All OK
             return res.status(200).send({
                 categoryID: category.categoryID,
                 status: 200,
@@ -64,6 +67,7 @@ exports.getCategory = async (req, res) => {
         .select(['-_id', '-__v'])
         .then((category) => {
             if (category.length) {
+                // All OK
                 return res.status(200).send(category);
             }
             return res.status(404).send({
@@ -92,6 +96,7 @@ exports.updateCategory = async (req, res) => {
                     message: "Category not found with categoryID: " + req.params.categoryID
                 });
             }
+            // All OK
             return res.send(category);
         })
         .catch((err) => catchDBErr(err, res))
@@ -106,6 +111,7 @@ exports.deleteCategory = async (req, res) => {
                     message: "Category not found with categoryID: " + req.params.categoryID
                 });
             }
+            // All OK
             return res.status(200).send({
                 categoryID: category.categoryID,
                 status: 200,
@@ -119,10 +125,12 @@ exports.getSubCategories = async (req, res) => {
     Category.find({ categoryID: req.params.categoryID })
         .then((category) => {
             if (category.length) {
+                // find categories with parentCategoryID == this.categoryID
                 Category.find({ parentCategoryID: category[0].categoryID })
                     .select(['-_id', '-__v'])
                     .then((category) => {
                         if (category.length) {
+                            // All OK
                             res.status(200).send(category);
                         }
                         else {
@@ -148,10 +156,12 @@ exports.getCategoryProducts = async (req, res) => {
     Category.find({ categoryID: req.params.categoryID })
         .then((category) => {
             if (category.length) {
+                // find products with categoryID == this.categoryID
                 Product.find({ categoryID: category[0].categoryID })
                     .select(['-_id', '-__v'])
                     .then((product) => {
                         if (product.length) {
+                            // All OK
                             res.status(200).send(product);
                         }
                         else {

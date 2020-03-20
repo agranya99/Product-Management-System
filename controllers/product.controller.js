@@ -20,6 +20,7 @@ async function catchDBErr(err, res) {
     }
 }
 
+// facilitate searching of products
 exports.filterProducts = async (req, res) => {
     const pageOptions = {
         offset: parseInt(req.query.offset, 10) || 0,
@@ -27,18 +28,22 @@ exports.filterProducts = async (req, res) => {
     }
     const queryObj = {};
 
+    // search by name
     if (req.query.name && req.query.name !== '') {
         queryObj["name"] = req.query.name;
     }
+    // search by status
     if (req.query.status && req.query.status !== '') {
         queryObj["status"] = req.query.status;
     }
+    // search by attributes
     if (req.query.attributes && Object.keys(req.query.attributes).length !== 0) {
         Object.keys(req.query.attributes).forEach(function (key) {
             var val = req.query.attributes[key].split(',');
             queryObj["attributes." + key] = val;
         });
     }
+    // search by qTags 
     var qTags = [];
     if (req.query.qTags && req.query.qTags !== '') {
         var val = req.query.qTags.split(',');
@@ -46,6 +51,7 @@ exports.filterProducts = async (req, res) => {
             qTags.push({ "qTags": qTag });
         });
     }
+    // search by provider name
     if (req.query.provider && req.query.provider !== '') {
         await Provider
             .find({ name: req.query.provider })
@@ -88,6 +94,7 @@ exports.createProduct = async (req, res) => {
 
     product.save()
         .then((product) => {
+            // All OK
             return res.status(200).send({
                 sku: product.sku,
                 status: 200,
@@ -103,6 +110,7 @@ exports.getProduct = async (req, res) => {
         .select(['-_id', '-__v'])
         .then((product) => {
             if (product.length) {
+                // All OK
                 return res.status(200).send(product);  
             }
             return res.status(404).send({
@@ -133,6 +141,7 @@ exports.updateProduct = async (req, res) => {
                     message: "Product not found with sku: " + req.params.sku
                 });
             }
+            // All OK
             return res.send(product);
         })
         .catch((err) => {
@@ -155,6 +164,7 @@ exports.deleteProduct = async (req, res) => {
                     message: "Product not found with sku: " + req.params.sku
                 });
             }
+            // All OK
             return res.status(200).send({
                 sku: product.sku,
                 status: 200,
@@ -170,6 +180,7 @@ exports.getSimilarProducts = async (req, res) => {
         .then((product) => {
             if (product.length) {
                 if (product[0].qTags.length) {
+                    // get qTags of this product
                     var qTags = [];
                     const queryObj = {};
                     product[0].qTags.forEach(function (qTag) {
@@ -178,13 +189,14 @@ exports.getSimilarProducts = async (req, res) => {
                     queryObj["$and"] = [];
                     queryObj["$and"].push({ "sku": { "$ne": product[0].sku } });
                     queryObj["$and"].push({ "$or": qTags });
-                    //queryObj["$or"] = qTags;
+                    // find other products with similar qTags
                     Product
                         .find(queryObj)
                         .and([])
                         .select(['-_id', '-__v'])
                         .then((product) => {
                             if (product.length) {
+                                // All OK
                                 return res.status(200).send(product);
                             }
                         })
