@@ -1,6 +1,10 @@
 # Product Management System
 
-A scalable REST API developed in Node.Js to facilitate CRUD and utility operations on products, categories, providers (Business Partners). Authorization is performed via **OAuth 2.0 (Client Credentials Flow)** and Request Validation is performed using **Hapi/JOI**. The API uses MongoDB as back-end database with **Mongoose** framework for data modelling, querying and validation. 
+A scalable REST API developed in Node.Js to facilitate CRUD and utility operations on products, categories, providers (Business Partners).
+
+The system design is such that it supports all kinds of Products (from stationery items to online MOOCs), with the use of nested `attributes` object that supports searching too. Each product can have its own attributes. The model provides generalization and specification as the categories support sub-categories and so on. 
+
+Authorization is performed via **OAuth 2.0 (Client Credentials Flow)** and Request Validation is performed using **Hapi/JOI**. The API uses MongoDB as back-end database with **Mongoose** framework for data modelling, querying and validation. 
 
 **OpenAPI 3.0 Specification** is written for the API. <https://app.swaggerhub.com/apis/agranya99/Product-Management-System/1.0.0>
 
@@ -44,23 +48,44 @@ A scalable REST API developed in Node.Js to facilitate CRUD and utility operatio
 ## Features and Nitty Gritties
 
 ### OpenAPI 3.0 Specification
-  Detailed API Description - available endpoints and possible operations on the endpoints with request and response details.
+Detailed API Description - available endpoints and possible operations on the endpoints with request and response details.
 
-  The specification is built using re-usable `schemas`, `parameters`, `requestBodies` and `responses` and includes `securitySchemes` for OAuth2.0.
+The specification is built using re-usable `schemas`, `parameters`, `requestBodies` and `responses` and includes `securitySchemes` for OAuth2.0.
 
-  Checkout <https://app.swaggerhub.com/apis/agranya99/Product-Management-System/1.0.0> or openapi-spec.yaml
+Checkout <https://app.swaggerhub.com/apis/agranya99/Product-Management-System/1.0.0> or openapi-spec.yaml
 
-### Authorization 
-  **OAuth 2.0 Client Credentials Grant** is implemented using Okta Authorization server. It helps with granting limited access without user credentials, set rate limits, etc.
+### Generalization and Specification (scalability!)
 
-  The client (daemon) needs to fetch a valid `token` from the okta authorization server by sending a request with `clientID`, `clientSecret`, and `scope`.
+The Products feature `attributes` object which can contain any number of attributes with multiple values
 
-  The received token (whose validity can be set in the authorization server, max = 1 day) is then passed as header (`bearer`) to the API server with each request.
+Like:
+```
+attributes: { "colors": ["white", "black"], "sizes": ["13in", "15in"] ... }
+```
 
-### Request Validation
-  **Hapi/JOI** is used to perform schema-based request validation. It helps enforce standards and prevent unexpected errors.
-  
-  Checkout: <https://github.com/agranya99/Product-Management-System/tree/master/screenshots/errors>
+The Categories feature `parentCategoryID` which allows branching of categories into more specific ones, like peripherals is a sub-category of computers again is a sub-category of electronics.
+
+### qTags - Tags associated with a product
+
+`qTags` help with searching and finding similar products. These are an array of strings with terms loosely associated with a product.
+
+Like:
+```
+    {
+        "qTags": ["laptop", "gaming", "student", "creator"],
+        "imageURLs": ["D:/blade/image001.png"],
+        "providerID": 1,
+        "status": "available",
+        "sku": "123abc45",
+        "name": "Blade Stealth",
+        "categoryID": 1,
+        "attributes": { "colors": ["white", "black", "silver"],
+                        "sizes": ["13in", "15in"] },
+        "price": 115999,
+        "launchDate": "2020-03-15T00:00:00.000Z",
+        "stock": 3500
+    }
+```
 
 ### Fetching, Searching and Pagination
 `limit` and `offset` parameters can be passed as query string to set a limit on number of records to fetch at once while being able to navigate through the whole set. This helps with **scalability**. 
@@ -146,6 +171,19 @@ Internal Server Errors
 | POST   | /providers                             | Add a new Provider (Partner Business) via JSON request                                                   |
 | PUT    | /providers/{providerID}                | Update an existing Provider (Partner Business)                                        |
 | DELETE | /providers/{providerID}                | Delete an existing Provider                                                           |
+
+### Authorization 
+**OAuth 2.0 Client Credentials Grant** is implemented using Okta Authorization server. It helps with granting limited access without user credentials, set rate limits, etc.
+
+The client (daemon) needs to fetch a valid `token` from the okta authorization server by sending a request with `clientID`, `clientSecret`, and `scope`.
+
+The received token (whose validity can be set in the authorization server, max = 1 day) is then passed as header (`bearer`) to the API server with each request.
+
+### Request Validation
+**Hapi/JOI** is used to perform schema-based request validation. It helps enforce standards and prevent unexpected errors.
+
+Checkout: <https://github.com/agranya99/Product-Management-System/tree/master/screenshots/errors>
+
 
 ## Miscellaneous
 
