@@ -42,21 +42,21 @@ A scalable REST API developed in Node.Js to facilitate CRUD and utility operatio
 ## Features
 
 ### OpenAPI 3.0 Specification
-Detailed API Description - available endpoints and possible operations on the endpoints with request and response details.
+  Detailed API Description - available endpoints and possible operations on the endpoints with request and response details.
 
-The specification is built using re-usable `schemas`, `parameters`, `requestBodies` and `responses` and includes `securitySchemes` for OAuth2.0.
+  The specification is built using re-usable `schemas`, `parameters`, `requestBodies` and `responses` and includes `securitySchemes` for OAuth2.0.
 
-Checkout <https://app.swaggerhub.com/apis/agranya99/Product-Management-System/1.0.0> or openapi-spec.yaml
+  Checkout <https://app.swaggerhub.com/apis/agranya99/Product-Management-System/1.0.0> or openapi-spec.yaml
 
 ### Authorization 
-**OAuth 2.0 Client Credentials Grant** is implemented using Okta Authorization server. It helps with granting limited access without user credentials, set rate limits, etc.
+  **OAuth 2.0 Client Credentials Grant** is implemented using Okta Authorization server. It helps with granting limited access without user credentials, set rate limits, etc.
 
-The client (daemon) needs to fetch a valid `token` from the okta authorization server by sending a request with `clientID`, `clientSecret`, and `scope`.
+  The client (daemon) needs to fetch a valid `token` from the okta authorization server by sending a request with `clientID`, `clientSecret`, and `scope`.
 
-The received token (whose validity can be set in the authorization server, max = 1 day) is then passed as header (`bearer`) to the API server with each request.
+  The received token (whose validity can be set in the authorization server, max = 1 day) is then passed as header (`bearer`) to the API server with each request.
 
 ### Request Validation
-**Hapi/JOI** is used to perform schema-based request validation. It helps enforce standards and prevent unexpected errors.
+  **Hapi/JOI** is used to perform schema-based request validation. It helps enforce standards and prevent unexpected errors.
 
 ### Fetching, Searching and Pagination
 `limit` and `offset` parameters can be passed as query string to set a limit on number of records to fetch at once while being able to navigate through the whole set. This helps with **scalability**. 
