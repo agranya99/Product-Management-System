@@ -1,6 +1,8 @@
 # Product Management System
 
-A scalable REST API developed in Node.Js to facilitate CRUD and utility operations on products, categories, providers (Business Partners). Authorization is performed via **OAuth 2.0 (Client Credentials Flow)** and Validation is performed using **Hapi/JOI**. The API uses MongoDB as back-end database with **Mongoose** framework for data modelling, querying and validation. **OpenAPI 3.0 Specification** is written for the API. <https://app.swaggerhub.com/apis/agranya99/Product-Management-System/1.0.0>
+A scalable REST API developed in Node.Js to facilitate CRUD and utility operations on products, categories, providers (Business Partners). Authorization is performed via **OAuth 2.0 (Client Credentials Flow)** and Validation is performed using **Hapi/JOI**. The API uses MongoDB as back-end database with **Mongoose** framework for data modelling, querying and validation. 
+
+**OpenAPI 3.0 Specification** is written for the API. <https://app.swaggerhub.com/apis/agranya99/Product-Management-System/1.0.0>
 
 ## Softwares and Frameworks
 - OpenAPI 3.0 Specification
