@@ -57,6 +57,8 @@ A scalable REST API developed in Node.Js to facilitate CRUD and utility operatio
 
 ### Request Validation
   **Hapi/JOI** is used to perform schema-based request validation. It helps enforce standards and prevent unexpected errors.
+  
+  Checkout: <https://github.com/agranya99/Product-Management-System/tree/master/screenshots/errors>
 
 ### Fetching, Searching and Pagination
 `limit` and `offset` parameters can be passed as query string to set a limit on number of records to fetch at once while being able to navigate through the whole set. This helps with **scalability**. 
@@ -126,6 +128,9 @@ Validation Errors
 
 Internal Server Errors
 - `500` response with { `status`, `message` }, no description of error
+
+| ![createProduct](https://github.com/agranya99/Product-Management-System/blob/master/screenshots/createProduct.PNG "createProduct") | ![createCategory](https://github.com/agranya99/Product-Management-System/blob/master/screenshots/createCategory.PNG "createCategory") |
+|------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
 
 
 | Method | Endpoint                               | Description                                                                           |
